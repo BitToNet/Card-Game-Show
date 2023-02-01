@@ -29,8 +29,8 @@ public class RotateModel : MonoBehaviour
         {
             var btn = GameObject.Find("Canvas/Panel/ButtonsContainer/btn_" + i).GetComponent<Button>();
             btnList.Add(btn);
-            
-            btn.onClick.AddListener(() => { LoadAnimal(btn);});
+
+            btn.onClick.AddListener(() => { LoadAnimal(btn); });
         }
     }
 
@@ -46,35 +46,33 @@ public class RotateModel : MonoBehaviour
 
         var prefab = Resources.Load<GameObject>("Prefabs/" + name);
         var go = Instantiate(prefab);
-        
+
         go.transform.position = Vector3.zero;
         modelTransform.eulerAngles = Vector3.zero;
-        
-        go.transform.SetParent(modelTransform,false);
+
+        go.transform.SetParent(modelTransform, false);
 
         currentAnimal = go.gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void BeginDrag()
     {
-        if (Input.GetMouseButtonDown(0) && !isRotate)
-        {
-            isRotate = true;
-            startPoint = Input.mousePosition;
-            startAngel = modelTransform.eulerAngles;
-        }
+        isRotate = true;
+        startPoint = Input.mousePosition;
+        startAngel = modelTransform.eulerAngles;
+    }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isRotate = false;
-        }
+    public void Drag()
+    {
+        var currentPoint = Input.mousePosition;
+        var x = startPoint.x - currentPoint.x;
+        modelTransform.eulerAngles = startAngel + new Vector3(0, x * rotateScale, 0);
 
-        if (isRotate)
-        {
-            var currentPoint = Input.mousePosition;
-            var x = startPoint.x - currentPoint.x;
-            modelTransform.eulerAngles = startAngel + new Vector3(0, x * rotateScale, 0);
-        }
+    }
+
+    public void EndDrag()
+    {
+        isRotate = false;
     }
 }
