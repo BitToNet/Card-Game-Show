@@ -1,5 +1,4 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+// 最基础的shader，第一个
 Shader "Unity Shaders Book/Chapter 5/5-2"
 {
     Properties
